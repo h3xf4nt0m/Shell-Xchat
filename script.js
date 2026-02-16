@@ -1,4 +1,3 @@
-الخاصة بك
 const firebaseConfig = {
   apiKey: "***",
   authDomain: "***",
@@ -355,3 +354,4 @@ function stopListening() {
   }
 
 }
+
