@@ -1,24 +1,20 @@
-// ✅ script.js - Terminal Chat v2.0
-// يدعم: المجموعات، الأسماء، الرسائل الخاصة، التخصيص، والكثير
-
-// 🔥 استبدل بإعدادات Firebase الخاصة بك
+الخاصة بك
 const firebaseConfig = {
-  apiKey: "AIzaSyBN_oU3u3Wg1aSgt5syOHkhdaX3HmzF5Kw",
-  authDomain: "shell-x.firebaseapp.com",
+  apiKey: "***",
+  authDomain: "***",
   projectId: "shell-x",
-  storageBucket: "shell-x.firebasestorage.app",
-  messagingSenderId: "862251819300",
-  appId: "1:862251819300:web:6a4e8c5ff30b3f0774d3b1"
+  storageBucket: "*****",
+  messagingSenderId: "*",
+  appId: "***"
 };
 
-// تهيئة Firebase
+
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// المتغيرات
 let currentGroup = null;
-let userName = `user_${Math.floor(1000 + Math.random() * 9000)}`; // اسم عشوائي
-let userColor = '#0f0'; // لون افتراضي
+let userName = `user_${Math.floor(1000 + Math.random() * 9000)}`; 
+let userColor = '#0f0'; 
 let theme = 'classic';
 let mutedUsers = new Set();
 let notifications = true;
@@ -27,7 +23,6 @@ let notifications = true;
 const output = document.getElementById('output');
 const input = document.getElementById('input');
 
-// دالة إضافة رسالة
 function append(text, color = userColor) {
   const line = document.createElement('div');
   line.textContent = text;
@@ -36,15 +31,14 @@ function append(text, color = userColor) {
   output.scrollTop = output.scrollHeight;
 }
 
-// رسالة ترحيب
 append("=======================================================");
 append("     Shell X Chat   ");
-append("     /join 1     bch tod5ol ll chat ta3 al 3bad al kol        ");
-append("     Ikteb '/help' bch ta3rf al codet               ");
+append("     /join 1  to enter to the public chat        ");
+append("     '/help' to show all codes          ");
 append("=======================================================");
 append("");
 
-// معالجة الإدخال
+
 input.addEventListener('keypress', async (e) => {
   if (e.key === 'Enter') {
     const cmd = input.value.trim();
@@ -56,27 +50,27 @@ input.addEventListener('keypress', async (e) => {
   }
 });
 
-// معالجة الأوامر
+
 async function handleCommand(cmd) {
   const args = cmd.trim().split(' ');
   const command = args[0].toLowerCase();
 
   // -----------------------------------------------
-  // 🔹 أوامر المجموعات والمستخدم
+  // 🔹 codes  
   // -----------------------------------------------
 
   if (command === '/create' && args.length >= 3) {
     const code = args[1];
     const groupName = args.slice(2).join(' ');
     if (groupName.length > 30) {
-      append("❌ Isme al Groupe Twiiiil.", "Blue");
+      append("❌ GroupName > 30.", "Blue");
       return;
     }
     try {
       const groupRef = db.collection('groups').doc(groupName);
       const doc = await groupRef.get();
       if (doc.exists) {
-        append(`❌   '${groupName}' Mawojod mn 9bal ;.`, "red");
+        append(`❌   '${groupName}' already exists ;.`, "red");
       } else {
         await groupRef.set({
           created: Date.now(),
@@ -359,4 +353,5 @@ function stopListening() {
     unsubscribe();
     unsubscribe = null;
   }
+
 }
