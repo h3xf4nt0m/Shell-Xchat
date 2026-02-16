@@ -1,0 +1,204 @@
+/* style.css - نسخة محدثة: خط أفضل + تقليل النيون */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #000;
+  color: #0f0;
+  font-family: 'Lucida Console', 'Monaco', 'Ubuntu Mono', 'Courier New', monospace;
+  font-size: 15px;
+  line-height: 1.5;
+  height: 100vh;
+  overflow: hidden;
+  direction: ltr;
+  text-align: left;
+  padding: 10px;
+}
+
+/* شعار الموقع */
+.header {
+  text-align: center;
+  padding: 6px 0;
+  font-size: 17px;
+  color: #0f0;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #030;
+  margin-bottom: 12px;
+  opacity: 0.85;
+}
+
+.header span {
+  color: #00ff00;
+}
+
+/* واجهة التيرمينال */
+#terminal {
+  background: #000;
+  border: 1px solid #050;
+  border-radius: 6px;
+  height: calc(100vh - 70px);
+  margin: 0 auto;
+  max-width: 1000px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 8px rgba(0, 100, 0, 0.15); /* تأثير نيون خفيف جدًا */
+  overflow: hidden;
+}
+
+/* محتوى الرسائل */
+#output {
+  flex: 1;
+  white-space: pre-wrap;
+  margin-bottom: 12px;
+  line-height: 1.6;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+
+/* مؤشر الوميض (أبسط) */
+#output::after {
+  content: '';
+  width: 7px;
+  height: 15px;
+  background: #0f0;
+  display: inline-block;
+  animation: blink 1s step-start infinite;
+  vertical-align: middle;
+  margin-right: 3px;
+  opacity: 0.7; /* أقل إشراقًا */
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 0.7; }
+  51%, 100% { opacity: 0; }
+}
+
+/* سطر الإدخال */
+.input-line {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 20, 0, 0.4);
+  border-radius: 5px;
+  padding: 5px 9px;
+  border: 1px solid #040;
+}
+
+.prompt {
+  color: #0f0;
+  margin-right: 9px;
+  font-weight: bold;
+}
+
+#input {
+  background: transparent;
+  border: none;
+  color: #0f0;
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+  flex: 1;
+  padding: 4px 0;
+  caret-color: #0f0;
+  opacity: 0.95;
+}
+
+#input::placeholder {
+  color: #070;
+  opacity: 0.5;
+}
+
+/* تأثير التحويم: خفيف جدًا */
+#terminal:hover {
+  border-color: #060;
+  box-shadow: 0 0 10px rgba(0, 120, 0, 0.2);
+  transition: all 0.3s ease;
+}
+/* style.css - إضافة Animations راقية */
+
+/* 1. تأثير ظهور تدريجي للرسائل */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#output > div {
+  animation: fadeIn 0.4s ease-out forwards;
+  opacity: 0;
+  transform: translateY(5px);
+  margin-bottom: 2px;
+}
+
+/* 2. تأثير الكتابة (Typewriter Effect) - اختياري */
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid #0f0;
+  animation: typing 3.5s steps(40) 1 normal,
+             blinkCursor 0.8s step-end infinite;
+  white-space: nowrap;
+  font-family: inherit;
+  color: #0f0;
+  padding: 0;
+  margin: 0;
+  animation-delay: 0.5s;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blinkCursor {
+  from, to { border-color: transparent }
+  50% { border-color: #0f0 }
+}
+
+/* 3. مؤشر الإدخال (Input Cursor) */
+#input {
+  caret-color: #0f0;
+  animation: blinkCursor 1s step-end infinite;
+}
+
+/* 4. تأثير وميض خفيف عند وصول رسالة جديدة */
+.new-message {
+  animation: pulse 0.6s ease 2;
+}
+
+@keyframes pulse {
+  0% { background: transparent; }
+  50% { background: rgba(0, 255, 0, 0.05); }
+  100% { background: transparent; }
+}
+
+/* 5. شعار الموقع مع تأثير دخول */
+.header {
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: headerSlide 0.8s ease-out forwards;
+}
+
+@keyframes headerSlide {
+  to {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
+}
+
+/* 6. واجهة التيرمينال: دخول ناعم */
+#terminal {
+  opacity: 0;
+  transform: scale(0.98);
+  animation: terminalIn 0.6s ease-out 0.2s forwards;
+}
+
+@keyframes terminalIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

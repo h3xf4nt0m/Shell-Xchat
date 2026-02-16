@@ -1,0 +1,29 @@
+
+🔹 Groups & Users:
+  /create <code> <name>   - Create a new group
+  /join <code>            - Join a group
+  /leave                 - Leave current group
+  /name <newName>        - Change your name
+  /whoami                - Show your name and group
+
+🔹 Messages & Tools:
+  /clear                 - Clear screen
+  /dm <user> <msg>       - Send private message
+  /me <action>           - Perform an action
+  /history               - Show last 20 messages
+  /pin <id>              - Pin a message
+  /edit <id> <text>      - Edit your message
+  /delete <id>           - Delete your message
+
+🔹 Settings:
+  /color <color>         - Change text color
+  /theme <name>          - Change UI theme
+  /mute <user>           - Mute a user
+  /unmute <user>         - Unmute a user
+  /notify <on|off>       - Toggle notifications
+  /status <text>         - Set your status
+
+🔹 System:
+  /help                  - Show this help
+  /about                 - About this app
+  /time                  - Show current time
