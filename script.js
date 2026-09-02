@@ -54,14 +54,14 @@ async function handleCommand(cmd) {
     const code = args[1];
     const groupName = args.slice(2).join(' ');
     if (groupName.length > 30) {
-      append("❌ Group Name must be less than 30 characters.", "Blue");
+      append(" Group Name must be less than 30 characters.", "Blue");
       return;
     }
     try {
       const groupRef = db.collection('groups').doc(groupName);
       const doc = await groupRef.get();
       if (doc.exists) {
-        append(`❌ Group '${groupName}' already exists.`, "red");
+        append(` Group '${groupName}' already exists.`, "red");
       } else {
         await groupRef.set({
           created: Date.now(),
@@ -72,7 +72,7 @@ async function handleCommand(cmd) {
         append(`Welcome to: ${groupName}`, "#0f0");
       }
     } catch (e) {
-      append("❌ Failed to create group. Please try again.", "red");
+      append(" Failed to create group. Please try again.", "red");
     }
   }
 
@@ -83,44 +83,44 @@ async function handleCommand(cmd) {
       const groupName = snapshot.docs[0].id;
       await joinGroup(groupName);
     } else {
-      append("❌ Invalid code.", "red");
+      append(" Invalid code.", "red");
     }
   }
 
   else if (command === '/leave') {
     if (currentGroup) {
-      append(`✅ Left Group: ${currentGroup}`, "#0f0");
+      append(` Left Group: ${currentGroup}`, "#0f0");
       currentGroup = null;
       stopListening();
     } else {
-      append("❌ You are not in a group.", "yellow");
+      append(" You are not in a group.", "yellow");
     }
   }
 
   else if (command === '/name' && args[1]) {
     const newName = args.slice(1).join(' ').substring(0, 15);
     userName = newName;
-    append(`✅ Your name is now ${userName}`, "#0f0");
+    append(` Your name is now ${userName}`, "#0f0");
   }
 
   else if (command === '/list') {
     if (!currentGroup) {
-      append("❌ You must join a group first.", "red");
+      append(" You must join a group first.", "red");
       return;
     }
-    append(`👥 Members in '${currentGroup}':`);
+    append(` Members in '${currentGroup}':`);
     append(`  • ${userName} (you)`);
     append("  • Other users will appear here in the full version.");
   }
 
   else if (command === '/whoami') {
-    append(`👤 User: ${userName}`);
-    append(`🔗 Group: ${currentGroup || 'None'}`);
+    append(` User: ${userName}`);
+    append(` Group: ${currentGroup || 'None'}`);
   }
 
   else if (command === '/clear') {
     output.innerHTML = '';
-    append("✅ Screen cleared.", "#0f0");
+    append(" Screen cleared.", "#0f0");
   }
 
   else if (command === '/me' && args[1]) {
@@ -128,7 +128,7 @@ async function handleCommand(cmd) {
     if (currentGroup) {
       append(`* ${userName} ${action}`, "#ff8c00");
     } else {
-      append("❌ Join a group to use /me.", "red");
+      append(" Join a group to use /me.", "red");
     }
   }
 
@@ -138,7 +138,7 @@ async function handleCommand(cmd) {
                        .collection('messages')
                        .orderBy('timestamp', 'desc').limit(20);
     const snapshot = await messagesRef.get();
-    append("📜 Last 20 messages:", "#0f9");
+    append("Last 20 messages:", "#0f9");
     snapshot.docs.reverse().forEach(doc => {
       const data = doc.data();
       append(data.text, userColor);
@@ -146,21 +146,21 @@ async function handleCommand(cmd) {
   }
 
   else if (command === '/pin' && args[1]) {
-    append(`📌 Msg ${args[1]} pinned.`, "#00f");
+    append(` Msg ${args[1]} pinned.`, "#00f");
   }
 
   else if (command === '/unpin' && args[1]) {
-    append(`📎 Message ${args[1]} unpinned.`, "#00f");
+    append(` Message ${args[1]} unpinned.`, "#00f");
   }
 
   else if (command === '/edit' && args.length >= 3) {
     const id = args[1];
     const newText = args.slice(2).join(' ');
-    append(`✏️ Message ${id} edited to: ${newText}`, "#0f0");
+    append(` Message ${id} edited to: ${newText}`, "#0f0");
   }
 
   else if (command === '/delete' && args[1]) {
-    append(`🗑️ Message ${args[1]} deleted.`, "red");
+    append(` Message ${args[1]} deleted.`, "red");
   }
 
   else if (command === '/color' && args[1]) {
@@ -174,9 +174,9 @@ async function handleCommand(cmd) {
     };
     if (colors[args[1].toLowerCase()]) {
       userColor = colors[args[1].toLowerCase()];
-      append(`🎨 Text color changed to ${args[1]}.`, userColor);
+      append(` Text color changed to ${args[1]}.`, userColor);
     } else {
-      append("❌ Color not found. Try: green, red, blue, yellow, purple, white");
+      append(" Color not found. Try: green, red, blue, yellow, purple, white");
     }
   }
 
@@ -185,46 +185,46 @@ async function handleCommand(cmd) {
     if (themes.includes(args[1])) {
       theme = args[1];
       document.body.className = theme;
-      append(`🎨 Theme changed to: ${theme}`, "#0f0");
+      append(` Theme changed to: ${theme}`, "#0f0");
     } else {
-      append("❌ Theme not found. Try: classic, matrix, dark");
+      append(" Theme not found. Try: classic, matrix, dark");
     }
   }
 
   else if (command === '/mute' && args[1]) {
     const user = args[1];
     mutedUsers.add(user);
-    append(`🔇 ${user} has been muted.`, "gray");
+    append(` ${user} has been muted.`, "gray");
   }
 
   else if (command === '/unmute' && args[1]) {
     const user = args[1];
     mutedUsers.delete(user);
-    append(`🔊 ${user} unmuted.`, "#0f0");
+    append(` ${user} unmuted.`, "#0f0");
   }
 
   else if (command === '/notify' && ['on', 'off'].includes(args[1])) {
     notifications = args[1] === 'on';
-    append(`🔔 Notifications: ${notifications ? 'ON' : 'OFF'}.`, "#0f0");
+    append(` Notifications: ${notifications ? 'ON' : 'OFF'}.`, "#0f0");
   }
 
   else if (command === '/status' && args[1]) {
     const status = args.slice(1).join(' ');
-    append(`📌 Status updated: ${status}`, "#0f9");
+    append(` Status updated: ${status}`, "#0f9");
   }
 
   else if (command === '/help') {
     append(`
-📘 AVAILABLE COMMANDS:
+ AVAILABLE COMMANDS:
 
-🔹 Groups & Users:
+ Groups & Users:
   /create <code> <name>   - Create a new group
   /join <code>            - Join a group
   /leave                 - Leave current group
   /name <newName>        - Change your name
   /whoami                - Show your name and group
 
-🔹 Messages & Tools:
+ Messages & Tools:
   /clear                 - Clear screen
   /dm <user> <msg>       - Send private message
   /me <action>           - Perform an action
@@ -232,8 +232,8 @@ async function handleCommand(cmd) {
   /pin <id>              - Pin a message
   /edit <id> <text>      - Edit your message
   /delete <id>           - Delete your message
-
-🔹 Settings:
+  
+ Settings:
   /color <color>         - Change text color
   /theme <name>          - Change UI theme
   /mute <user>           - Mute a user
@@ -241,7 +241,7 @@ async function handleCommand(cmd) {
   /notify <on|off>       - Toggle notifications
   /status <text>         - Set your status
 
-🔹 System:
+ System:
   /help                  - Show this help
   /about                 - About this app
   /time                  - Show current time
@@ -255,12 +255,12 @@ async function handleCommand(cmd) {
 
   else if (command === '/time') {
     const now = new Date();
-    append(`🕒 Current time: ${now.toLocaleString()}`, "#0f0");
+    append(` Current time: ${now.toLocaleString()}`, "#0f0");
   }
 
   else {
     if (cmd.startsWith('/')) {
-      append(`❌ Unknown command: ${command}. Type '/help' for assistance.`, "red");
+      append(` Unknown command: ${command}. Type '/help' for assistance.`, "red");
     } else {
       if (currentGroup) {
         const messagesRef = db.collection('groups').doc(currentGroup)
@@ -272,7 +272,7 @@ async function handleCommand(cmd) {
           type: 'chat'
         });
       } else {
-        append("❌ You are not in a group. Use /join or /create", "red");
+        append(" You are not in a group. Use /join or /create", "red");
       }
     }
   }
@@ -283,14 +283,14 @@ async function joinGroup(groupName) {
     const groupRef = db.collection('groups').doc(groupName);
     const doc = await groupRef.get();
     if (!doc.exists) {
-      append("❌ Group does not exist.", "red");
+      append(" Group does not exist.", "red");
       return;
     }
     currentGroup = groupName;
-    append(`✅ Joined Group: ${groupName}`, "#0f0");
+    append(` Joined Group: ${groupName}`, "#0f0");
     startListening(groupName);
   } catch (e) {
-    append("❌ Error joining. Please try again in 3 minutes.", "red");
+    append("Error joining. Please try again in 3 minutes.", "red");
   }
 }
 
